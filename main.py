@@ -12,10 +12,10 @@ from urllib.parse import urlparse
 
 
 # --- Configuration & API Key Loading ---
-load_dotenv()
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
-GNEWS_API_KEY = os.getenv("GNEWS_API_KEY")
+# load_dotenv()
+GOOGLE_API_KEY =  st.secrets["GOOGLE_API_KEY"]
+TAVILY_API_KEY = st.secrets["TAVILY_API_KEY"]
+GNEWS_API_KEY = st.secrets["GNEWS_API_KEY"]
 
 
 
