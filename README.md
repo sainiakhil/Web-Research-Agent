@@ -1,4 +1,3 @@
-# Web-Research-Agent
 # Web Research Agent with Gemini, Tavily, and NewsAPI
 
 This Streamlit application acts as an AI-powered web research assistant. It takes a user's research query, leverages multiple APIs to search the web and news sources, scrapes relevant content from web pages, and uses Google's Gemini language model to synthesize the findings into a comprehensive report.
@@ -34,7 +33,7 @@ Follow these steps to set up and run the Web Research Agent:
     *   Ensure you have `pip` (Python package installer) available.
 
 **2. Clone or Download:**
-    *   Clone this repository or download the `real_web_research_agent.py` script to your local machine.
+    *   Clone this repository or download the `main.py` script to your local machine.
 
 **3. Install Dependencies:**
     *   Navigate to the directory containing the script in your terminal.
