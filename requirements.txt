@@ -5,3 +5,4 @@ beautifulsoup4
 tavily-python
 newsapi-python
 python-dotenv
+lxml
