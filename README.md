@@ -1,1 +1,92 @@
 # Web-Research-Agent
+# Web Research Agent with Gemini, Tavily, and NewsAPI
+
+This Streamlit application acts as an AI-powered web research assistant. It takes a user's research query, leverages multiple APIs to search the web and news sources, scrapes relevant content from web pages, and uses Google's Gemini language model to synthesize the findings into a comprehensive report.
+
+## Features
+
+*   Accepts natural language research queries via a web interface.
+*   Identifies potentially news-focused queries to use the appropriate search tool.
+*   Utilizes **Tavily Search API** for general web search capabilities.
+*   Utilizes **NewsAPI.org** (via `newsapi-python` library) for fetching recent news articles.
+*   Scrapes textual content from target web pages using **Requests** and **BeautifulSoup4**.
+*   Employs **Google Gemini (Flash model)** for analyzing scraped content and synthesizing a final report.
+*   Provides a user-friendly interface built with **Streamlit**.
+
+## Technologies Used
+
+*   **Python 3.7+**
+*   **Streamlit:** For the web application interface.
+*   **google-generativeai:** Google Gemini API client library.
+*   **tavily-python:** Tavily Search API client library.
+*   **newsapi-python:** NewsAPI.org client library.
+*   **requests:** For making HTTP requests to fetch web pages.
+*   **beautifulsoup4:** For parsing HTML content.
+*   **lxml:** Efficient HTML parser used by BeautifulSoup.
+*   **python-dotenv:** For managing API keys via a `.env` file.
+
+## Setup Instructions
+
+Follow these steps to set up and run the Web Research Agent:
+
+**1. Prerequisites:**
+    *   Ensure you have Python 3.7 or newer installed.
+    *   Ensure you have `pip` (Python package installer) available.
+
+**2. Clone or Download:**
+    *   Clone this repository or download the `real_web_research_agent.py` script to your local machine.
+
+**3. Install Dependencies:**
+    *   Navigate to the directory containing the script in your terminal.
+    *   Install the required Python packages:
+        ```bash
+        pip install streamlit google-generativeai tavily-python newsapi-python requests beautifulsoup4 lxml python-dotenv
+        ```
+
+**4. Obtain API Keys:**
+    *   You will need API keys from the following services. Most offer free tiers suitable for basic use, but be mindful of usage limits and potential costs.
+        *   **Google Gemini API Key:** Obtain from [Google AI Studio](https://aistudio.google.com/app/apikey).
+        *   **Tavily API Key:** Obtain from [Tavily AI](https://tavily.com/).
+        *   **NewsAPI.org API Key:** Obtain from [NewsAPI.org](https://newsapi.org/).
+
+**5. Configure Environment Variables:**
+    *   Create a file named `.env` in the *same directory* as the `real_web_research_agent.py` script.
+    *   Add your API keys to this file in the following format:
+
+        ```plaintext
+        # .env file contents
+
+        GOOGLE_API_KEY=YOUR_GOOGLE_GEMINI_API_KEY_HERE
+        TAVILY_API_KEY=YOUR_TAVILY_API_KEY_HERE
+        GNEWS_API_KEY=YOUR_NEWSAPI.ORG_API_KEY_HERE
+        ```
+    *   **Important Note:** The variable name `GNEWS_API_KEY` is used in the script to load the key for the `NewsApiClient` (which connects to NewsAPI.org). Ensure your NewsAPI.org key is assigned to `GNEWS_API_KEY` in the `.env` file.
+
+## How to Run
+
+1.  Open your terminal or command prompt.
+2.  Navigate to the directory where you saved the `real_web_research_agent.py` script and the `.env` file.
+3.  Run the Streamlit application using the command:
+    ```bash
+    streamlit run real_web_research_agent.py
+    ```
+4.  Streamlit will start the application and usually open it automatically in your default web browser. If not, the terminal will provide a local URL (typically `http://localhost:8501`) that you can navigate to.
+5.  Enter your research query in the text area and click the "Start Research" button.
+
+## How It Works
+
+1.  **Query Input:** The user enters a research query into the Streamlit interface.
+2.  **Basic Query Analysis:** The script performs a simple check for keywords (like "news", "latest") to determine if the query is likely news-focused.
+3.  **Tool Selection & Search:**
+    *   If flagged as news-focused, it uses the **NewsAPI.org** client (`NewsApiClient`) to search for relevant recent articles.
+    *   Otherwise, it uses the **Tavily API** for a broader web search.
+4.  **Content Scraping:** The agent takes the URLs from the top search results (up to a defined limit). For each URL, it uses **Requests** to fetch the page's HTML and **BeautifulSoup** to parse it, attempting to extract the main textual content while removing scripts, styles, and common boilerplate like headers/footers.
+5.  **Information Synthesis:** The extracted text chunks from the scraped pages are compiled into a single context. This context, along with the original user query, is sent to the **Google Gemini API**. The LLM is prompted to synthesize the information, answer the original query based *only* on the provided text, cite sources (URLs), and format the output as a report.
+6.  **Display Report:** The final report generated by Gemini is displayed in the Streamlit interface.
+
+## Important Notes & Limitations
+
+*   **API Keys:** The application requires valid API keys to function. Ensure they are correctly placed in the `.env` file. Remember that API usage may be subject to rate limits or costs depending on the service provider's policies.
+*   **Web Scraping Reliability:** Web scraping is inherently fragile. The `scrape_website_content` function uses common heuristics but may fail on websites with complex structures, heavy JavaScript rendering, or anti-scraping protections (like CAPTCHAs or IP blocking). Results may vary significantly between websites.
+*   **Content Quality:** The quality and relevance of the final report depend heavily on the quality of the search results, the success of the web scraping, and the ability of the Gemini model to synthesize the provided information accurately.
+*   **Error Handling:** Basic error handling is included, but complex failures in API calls or scraping might occur. Check the terminal output and Streamlit interface messages for details if errors arise.
