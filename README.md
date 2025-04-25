@@ -49,7 +49,7 @@ Follow these steps to set up and run the Web Research Agent:
         *   **NewsAPI.org API Key:** Obtain from [NewsAPI.org](https://newsapi.org/).
 
 **5. Configure Environment Variables:**
-    *   Create a file named `.env` in the *same directory* as the `real_web_research_agent.py` script.
+    *   Create a file named `.env` in the *same directory* as the `main.py` script.
     *   Add your API keys to this file in the following format:
 
         ```plaintext
@@ -64,10 +64,10 @@ Follow these steps to set up and run the Web Research Agent:
 ## How to Run
 
 1.  Open your terminal or command prompt.
-2.  Navigate to the directory where you saved the `real_web_research_agent.py` script and the `.env` file.
+2.  Navigate to the directory where you saved the `main.py` script and the `.env` file.
 3.  Run the Streamlit application using the command:
     ```bash
-    streamlit run real_web_research_agent.py
+    streamlit run main.py
     ```
 4.  Streamlit will start the application and usually open it automatically in your default web browser. If not, the terminal will provide a local URL (typically `http://localhost:8501`) that you can navigate to.
 5.  Enter your research query in the text area and click the "Start Research" button.
